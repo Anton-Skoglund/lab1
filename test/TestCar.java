@@ -17,6 +17,7 @@ public class TestCar {
             return cursedSpeedFactor;
         }
     }
+    //nothing
     Volvo240 volvo;
     CursedCar carWithSpeedFactorNegative;
     CursedCar carWithSpeedFactorVeryLarge;
