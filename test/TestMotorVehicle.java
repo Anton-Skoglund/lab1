@@ -6,28 +6,12 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class TestCar {
-    private static class CursedCar extends Car{
-        private final double cursedSpeedFactor;
-        public CursedCar(double cursedSpeedFactor){
-            super(-1, Color.MAGENTA, 100, "😎");
-            this.cursedSpeedFactor = cursedSpeedFactor;
-        }
-        protected double speedFactor(){
-            return cursedSpeedFactor;
-        }
-    }
-    //nothing
+public class TestMotorVehicle {
     Volvo240 volvo;
-    CursedCar carWithSpeedFactorNegative;
-    CursedCar carWithSpeedFactorVeryLarge;
     @Before
     public void initCars(){
         volvo = new Volvo240();
-        carWithSpeedFactorNegative = new CursedCar(-69.420);
-        carWithSpeedFactorVeryLarge = new CursedCar(69420);
     }
-
     @Test
     public void volvoDoorNrShouldBe4(){
         assertEquals(4, volvo.getNrDoors());
@@ -139,9 +123,11 @@ public class TestCar {
     }
     @Test
     public void testIncrementSpeedAboveEnginePower(){
-        carWithSpeedFactorVeryLarge.startEngine();
-        carWithSpeedFactorVeryLarge.gas(1);
-        assertEquals(carWithSpeedFactorVeryLarge.getEnginePower(), carWithSpeedFactorVeryLarge.getCurrentSpeed(), 0.001);
+        volvo.startEngine();
+        for (int i = 0; i < 150; i++){
+            volvo.gas(0.9);
+        }
+        assertEquals(volvo.getEnginePower(), volvo.getCurrentSpeed(), 0.001);
     }
 
     @Test
