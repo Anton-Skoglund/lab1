@@ -1,3 +1,6 @@
+package MotorVehicle;
+
+import Cars.Volvo240;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,7 +43,7 @@ public class TestMotorVehicle {
 
     @Test
     public void testVolvoGetModelName(){
-        assertEquals( "Volvo240", volvo.getModelName());
+        assertEquals( "Cars.Volvo240", volvo.getModelName());
     }
 
     @Test

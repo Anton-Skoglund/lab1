@@ -1,5 +1,9 @@
+package Cars;
+
+import Cars.Volvo240;
 import org.junit.Before;
 import org.junit.Test;
+import MotorVehicle.*;
 
 import static org.junit.Assert.*;
 

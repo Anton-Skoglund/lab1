@@ -1,3 +1,5 @@
+package MotorVehicle;
+
 import java.awt.*;
 
 public abstract class MotorVehicle implements Movable{

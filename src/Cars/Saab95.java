@@ -1,10 +1,13 @@
+package Cars;
+import MotorVehicle.*;
+
 import java.awt.*;
 
 public class Saab95 extends Car {
     public boolean turboOn;
 
     public Saab95(){
-        super(2, Color.red, 125, "Saab95");
+        super(2, Color.red, 125, "Cars.Saab95");
         setTurboOff();
     }
 

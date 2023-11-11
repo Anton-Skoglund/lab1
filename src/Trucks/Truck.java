@@ -1,6 +1,9 @@
+package Trucks;
+import MotorVehicle.*;
+
 import java.awt.*;
 
-public abstract class Truck extends MotorVehicle implements Ramp{
+public abstract class Truck extends MotorVehicle implements Ramp {
     private double rampAngel = 0;
     private double minRampAngel = 0;
     private double maxRampAngel = 70;

@@ -1,3 +1,6 @@
+import Cars.TestSaab;
+import Cars.TestVolvo;
+import MotorVehicle.TestMotorVehicle;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

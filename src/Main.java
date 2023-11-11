@@ -1,4 +1,6 @@
-import java.awt.*;
+import MotorVehicle.MotorVehicle;
+import Trucks.Scania;
+
 import java.util.Arrays;
 
 public class Main {
