@@ -22,6 +22,16 @@ public class Main {
 
     public static void main(String[] args){
         Scania scania = new Scania();
+        scania.tiltUp();
         System.out.println(scania.getRampAngel());
+        scania.tiltUp();
+        System.out.println(scania.getRampAngel());
+        scania.tiltDown();
+        scania.tiltDown();
+        System.out.println(scania.getRampAngel());
+        scania.tiltUp();
+        scania.startEngine();
+        System.out.println(scania.getCurrentSpeed());
+
     }
 }

@@ -6,7 +6,9 @@ public abstract class MotorVehicle implements Movable{
     private final int nrDoors; // Number of doors on the car
     private boolean engineIsOn;
     private final double enginePower; // Engine power of the car
-    private double currentSpeed; // The current speed of the car
+
+    // Protected because being able to reach it form truck
+    protected double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private final String modelName; // The car model name
     private double currentRotation; // Plane rotation in degrees
@@ -74,6 +76,7 @@ public abstract class MotorVehicle implements Movable{
         currentSpeed = 0.1;
         engineIsOn = true;
     }
+
 
     public void stopEngine(){
         engineIsOn = false;
