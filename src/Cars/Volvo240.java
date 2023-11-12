@@ -5,7 +5,10 @@ import java.awt.*;
 public class Volvo240 extends Car {
 
     public Volvo240(){
-        super(4,Color.black, 100, "Cars.Volvo240");
+        super(  4,
+                Color.black,
+                100,
+                "Cars.Volvo240");
         stopEngine();
     }
 

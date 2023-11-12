@@ -21,11 +21,7 @@ public class TestTruck {
     public void testGetRampAngel(){
         assertEquals(scania.getRampAngel(), 0, 0);
     }
-    @Test
-    public void testSetRampAngel(){
-        scania.setRampAngel(10);
-        assertEquals(scania.getRampAngel(), 10, 0);
-    }
+
     @Test
     public void testGetMinRampAngel(){
         assertEquals(scania.getMinRampAngel(), 0, 0);

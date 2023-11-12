@@ -1,8 +1,21 @@
 package MotorVehicle;
 
 import java.awt.*;
+import java.io.NotActiveException;
+import java.util.ArrayList;
 
 public abstract class MotorVehicle implements Movable{
+    // Keep count of number of truck and index them
+    // Change to list, so you can append forever
+    // Need to check that no null exception when list is empyt happens
+    public static int numberOfObjects = 0;
+    public static ArrayList<MotorVehicle> motorVehicles = new ArrayList<MotorVehicle>();
+
+    {
+        motorVehicles.add(this);
+        numberOfObjects++;
+    }
+
     private final int nrDoors; // Number of doors on the car
     private boolean engineIsOn;
     private final double enginePower; // Engine power of the car
@@ -67,6 +80,8 @@ public abstract class MotorVehicle implements Movable{
     public double[] getPosition(){
         return currentPosition;
     }
+
+
     public void resetTransform(){
         currentPosition = new double[]{0,0};
         currentRotation = 0;

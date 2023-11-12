@@ -4,12 +4,16 @@ import MotorVehicle.*;
 import java.awt.*;
 
 public abstract class Truck extends MotorVehicle implements Ramp {
-    private double rampAngel;
-    private final double minRampAngel;
-    private final double maxRampAngel;
-    private final double angelChangeSpeed;
+    private int rampAngel;
+    private final int minRampAngel;
+    private final int maxRampAngel;
+    private final int angelChangeSpeed;
+    // int instead of double Simplifies the second part of the assignment
+    // I can't think of any reason for sub integer degree specificity for angel
+    // of ramp.
 
-    public Truck(int nrDoors, Color color, double enginePower, String modelName, double rampAngel, double minRampAngel, double maxRampAngel, double angelChangeSpeed) {
+
+    public Truck(int nrDoors, Color color, double enginePower, String modelName, int rampAngel, int minRampAngel, int maxRampAngel, int angelChangeSpeed) {
         super(nrDoors, color, enginePower, modelName);
         this.rampAngel = rampAngel;
         this.minRampAngel = minRampAngel;
@@ -17,20 +21,18 @@ public abstract class Truck extends MotorVehicle implements Ramp {
         this.angelChangeSpeed = angelChangeSpeed;
     }
 
-    public double getRampAngel(){
+    public int getRampAngel(){
         return rampAngel;
     }
-    protected void setRampAngel(double newAngel){
-        rampAngel = newAngel;
-    }
-    public double getMinRampAngel(){
+
+    public int getMinRampAngel(){
         return minRampAngel;
     }
-    public double getMaxRampAngel(){
+    public int getMaxRampAngel(){
         return maxRampAngel;
     }
 
-    public double getAngelChangeSpeed(){
+    public int getAngelChangeSpeed(){
         return angelChangeSpeed;
     }
 
@@ -42,7 +44,7 @@ public abstract class Truck extends MotorVehicle implements Ramp {
             currentSpeed = 0.1;
         }
     }
-    public boolean driveAngel(double angel){
+    public boolean driveAngel(int angel){
         if (angel == 0){
             return true;
         }else{
@@ -51,22 +53,37 @@ public abstract class Truck extends MotorVehicle implements Ramp {
         }
     }
 
-    public boolean checkRampAngel(double newAngel){
+    public boolean checkRampAngel(int newAngel){
         if(newAngel >= minRampAngel && newAngel <= maxRampAngel){
             return true;
         }else{
             return false;
         }
     }
-    public abstract void tiltUp();
-    public abstract void tiltDown();
+    public void tiltUp() {
+        int newAngel = getRampAngel() + getAngelChangeSpeed();
+        if (checkRampAngel(newAngel)){
+            rampAngel = newAngel;
+        }else{
+            printAngelNotAllowed(newAngel, getRampAngel());
+        }
+    }
+
+    public void tiltDown() {
+        int newAngel = getRampAngel() - getAngelChangeSpeed();
+        if (checkRampAngel(newAngel)){
+            rampAngel = newAngel;
+        }else{
+            printAngelNotAllowed(newAngel, getRampAngel());
+        }
+    }
 
     protected abstract double speedFactor();
 
-    protected void printAngelNotAllowed(double angel){
+    protected void printAngelNotAllowed(int angel){
         System.out.println(("New angel " + angel + " is not allowed."));
     }
-    protected void printAngelNotAllowed(double newAngel, double oldAngel){
+    protected void printAngelNotAllowed(int newAngel, int oldAngel){
         System.out.println(("New angel " + newAngel + " is not allowed, angel is still " + oldAngel));
     }
 }

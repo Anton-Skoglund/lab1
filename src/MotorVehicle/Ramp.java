@@ -6,5 +6,5 @@ public interface Ramp {
 
     void tiltUp();
     void tiltDown();
-    boolean driveAngel(double angel);
+    boolean driveAngel(int angel);
 }

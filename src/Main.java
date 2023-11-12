@@ -1,4 +1,6 @@
+import Cars.Volvo240;
 import MotorVehicle.MotorVehicle;
+import Trucks.Lory;
 import Trucks.Scania;
 
 import java.util.Arrays;
@@ -21,17 +23,18 @@ public class Main {
     }
 
     public static void main(String[] args){
-        Scania scania = new Scania();
-        scania.tiltUp();
-        System.out.println(scania.getRampAngel());
-        scania.tiltUp();
-        System.out.println(scania.getRampAngel());
-        scania.tiltDown();
-        scania.tiltDown();
-        System.out.println(scania.getRampAngel());
-        scania.tiltUp();
-        scania.startEngine();
-        System.out.println(scania.getCurrentSpeed());
-
+        Lory lory = new Lory();
+        System.out.println(lory.getRampAngel());
+        lory.tiltUp();
+        System.out.println(lory.getRampAngel());
+        lory.tiltUp();
+        lory.tiltDown();
+        lory.tiltDown();
+        lory.getStorageInfo();
+        Volvo240 volvo = new Volvo240();
+        Lory lory1 = new Lory();
+        Lory lory2 = new Lory();
+        lory.pickUpCar();
+        lory.getStorageInfo();
     }
 }
