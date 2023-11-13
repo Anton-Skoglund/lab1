@@ -1,7 +1,6 @@
 package MotorVehicle;
 
 import java.awt.*;
-import java.io.NotActiveException;
 import java.util.ArrayList;
 
 public abstract class MotorVehicle implements Movable{
@@ -17,7 +16,7 @@ public abstract class MotorVehicle implements Movable{
     }
 
     private final int nrDoors; // Number of doors on the car
-    private boolean engineIsOn;
+    protected boolean engineIsOn;
     private final double enginePower; // Engine power of the car
 
     // Protected because being able to reach it form truck
@@ -80,6 +79,8 @@ public abstract class MotorVehicle implements Movable{
     public double[] getPosition(){
         return currentPosition;
     }
+
+    public void setPositon(double[] inputPosisiton){currentPosition = inputPosisiton;}
 
 
     public void resetTransform(){

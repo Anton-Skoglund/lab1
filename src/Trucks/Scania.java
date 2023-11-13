@@ -3,6 +3,8 @@ package Trucks;
 import java.awt.*;
 
 public class Scania extends Truck{
+    //TODO
+    // - Add a speedFactor and test it
 
     public Scania() {
         super(  2,

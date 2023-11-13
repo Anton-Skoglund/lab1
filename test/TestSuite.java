@@ -1,6 +1,7 @@
 import Cars.TestSaab;
 import Cars.TestVolvo;
 import MotorVehicle.TestMotorVehicle;
+import Trucks.TestLory;
 import Trucks.TestScania;
 import Trucks.TestTruck;
 import org.junit.runner.RunWith;
@@ -15,7 +16,8 @@ import static org.junit.Assert.assertFalse;
                         TestSaab.class,
 
                         TestTruck.class,
-                        TestScania.class})
+                        TestScania.class,
+                        TestLory.class})
 
 public class TestSuite {
 

@@ -34,7 +34,13 @@ public class Main {
         Volvo240 volvo = new Volvo240();
         Lory lory1 = new Lory();
         Lory lory2 = new Lory();
-        lory.pickUpCar();
+        lory.PickUpMotorVehicle();
         lory.getStorageInfo();
+        lory.setPositon(new double[]{100, 200});
+        lory.startEngine();
+        lory.gas(0.2);
+        System.out.println(Arrays.toString(volvo.getPosition()));
+        lory.takeOutMotorVehicle();
+        System.out.println(Arrays.toString(volvo.getPosition()));
     }
 }

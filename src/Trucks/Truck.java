@@ -42,6 +42,10 @@ public abstract class Truck extends MotorVehicle implements Ramp {
     public void startEngine(){
         if (driveAngel(rampAngel)){
             currentSpeed = 0.1;
+            engineIsOn = true;
+        }
+        else{
+            System.out.println("Ramp angel most be 0");
         }
     }
     public boolean driveAngel(int angel){
