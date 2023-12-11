@@ -1,20 +1,11 @@
 package renderEngine.Controller;
 import java.awt.*;
-import java.util.Random;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import assets.elements.Element;
-import assets.elements.Vehicle;
-import assets.elements.vehicles.cars.VehicleFactory;
-import assets.elements.vehicles.motorVehicles;
-import assets.elements.vehicles.cars.passengerCars.Saab95;
-import renderEngine.ModelUpdate;
+
+import renderEngine.Model.InputLogic;
+import renderEngine.Model.ModelUpdate;
+import renderEngine.View.View;
 
 import javax.swing.*;
-import java.util.ArrayList;
-
-import static renderEngine.Controller.CarType.NO_CAR;
 
 /**
 * This class represents the Controller part in the MVC pattern.
@@ -23,6 +14,7 @@ import static renderEngine.Controller.CarType.NO_CAR;
  **/
 
 public class Controller extends JPanel{
+    private int height = View.controllerHeight;
     private JPanel gasPanel = new JPanel();
     private JSpinner amountSpinner = new JSpinner();
     private int amount = 0;
@@ -41,6 +33,10 @@ public class Controller extends JPanel{
 
     private JButton startButton = new JButton("Start all cars");
     private JButton stopButton = new JButton("Stop all cars");
+    @Override
+    public int getHeight(){
+        return height;
+    }
 
     public void addControlPanelToFrame(JFrame frame){
         initUI(frame, this);
@@ -72,36 +68,35 @@ public class Controller extends JPanel{
         this.add(turboOffButton,    10);
         this.add(stopButton,        11);
 
-        this.setPreferredSize(new Dimension((frame.getWidth())-100, 200));
+        this.setPreferredSize(new Dimension(View.width, height));
         this.setBackground(Color.CYAN);
     }
 
 
-    private void createButton(JFrame frame, JButton startButton, Color blue, Color green) {
-        startButton.setBackground(blue);
-        startButton.setForeground(green);
-        startButton.setPreferredSize(new Dimension(frame.getWidth() / 5 - 15, 200));
+    private void createButton(JFrame frame, JButton button, Color background, Color foreground) {
+        button.setBackground(background);
+        button.setForeground(foreground);
     }
 
 
     private void addActionListenerToAllButtons(Controller controller) {
-        gasButton.addActionListener(e -> ModelUpdate.gas(amount));
-        brakeButton.addActionListener(e -> ModelUpdate.brake(amount));
+        gasButton.addActionListener(e -> InputLogic.gas(amount));
+        brakeButton.addActionListener(e -> InputLogic.brake(amount));
 
-        startButton.addActionListener(e -> ModelUpdate.start());
-        stopButton.addActionListener(e -> ModelUpdate.stop());
+        startButton.addActionListener(e -> InputLogic.start());
+        stopButton.addActionListener(e -> InputLogic.stop());
 
-        turboOnButton.addActionListener(e -> ModelUpdate.turboOn());
-        turboOffButton.addActionListener(e -> ModelUpdate.turboOff());
+        turboOnButton.addActionListener(e -> InputLogic.turboOn());
+        turboOffButton.addActionListener(e -> InputLogic.turboOff());
 
-        extendTrayButton.addActionListener(e -> ModelUpdate.extendTray());
-        retractTrayButton.addActionListener(e -> ModelUpdate.retractTray());
+        extendTrayButton.addActionListener(e -> InputLogic.extendTray());
+        retractTrayButton.addActionListener(e -> InputLogic.retractTray());
 
         addCar.addActionListener(e -> {
             CarType selectedCarType = (CarType) carSpinner.getValue();
-            ModelUpdate.addCar(selectedCarType);
+            InputLogic.addCar(selectedCarType);
         });
-        removeCar.addActionListener(e -> ModelUpdate.removeCar());
+        removeCar.addActionListener(e -> InputLogic.removeCar());
     }
 
 

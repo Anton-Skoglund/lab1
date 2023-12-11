@@ -1,4 +1,6 @@
-package renderEngine;
+package renderEngine.Model;
+
+import renderEngine.Model.ModelObserver;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

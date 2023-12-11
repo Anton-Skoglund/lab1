@@ -2,7 +2,7 @@ package renderEngine.View;
 
 import assets.elements.Element;
 import renderEngine.Controller.Controller;
-import renderEngine.ModelObserver;
+import renderEngine.Model.ModelObserver;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,15 +17,14 @@ import java.util.ArrayList;
  **/
 //TEST
 public class View extends JFrame implements ModelObserver {
-    private static final int width = 800;
-    private static final int height = 800;
+    public static final int width = 800;
+    public static final int height = 800;
+    public static final int controllerHeight = 200;
     // The controller member
     private GameView gameView;
-    private Controller controller;
 
     public View(String frameName, Controller controller, ArrayList<Element> elementsOnScreen){
-        this.controller = controller;
-        this.gameView = new GameView(width, height - 240, elementsOnScreen);
+        this.gameView = new GameView(width, height - controllerHeight, elementsOnScreen);
         setupView(frameName);
         this.add(gameView);
         controller.addControlPanelToFrame(this);
@@ -37,12 +36,6 @@ public class View extends JFrame implements ModelObserver {
         this.gameView.repaint();
     }
 
-    public int getWidth(){
-        return width;
-    }
-    public int getHeight(){
-        return height;
-    }
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work

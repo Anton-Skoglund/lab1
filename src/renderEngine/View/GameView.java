@@ -17,17 +17,15 @@ import static java.util.Map.entry;
 // This panel represent the animated part of the view with the car images.
 
 public class GameView extends JPanel{
+    boolean background = true;
+    BufferedImage backgroundImage = getImage("../pics/background.jpg");
 
-    // Just a single image, TODO: Generalize
-    BufferedImage backgroundImage;
-    BufferedImage volvoImage;
     Map<Class<? extends Element>, BufferedImage> imagePaths = Map.ofEntries(
             entry(Volvo240.class, getImage("../pics/Volvo240.jpg")),
             entry(Saab95.class, getImage("../pics/Saab95.jpg")),
             entry(ScaniaL280.class, getImage("../pics/Scania.jpg")
             ));
     ArrayList<Element> elementsOnScreen;
-        // TODO: Make this general for all cars
 
     private BufferedImage getImage(String path){
         try{
@@ -44,11 +42,12 @@ public class GameView extends JPanel{
         this.setPreferredSize(new Dimension(x, y));
     }
 
-    // This method is called each time the panel updates/refreshes/repaints itself
-    // TODO: Change to suit your needs.
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (background){
+            g.drawImage(backgroundImage, 0, 0, null);
+        }
         for (Element element : elementsOnScreen){
             g.drawImage(imagePaths.get(element.getClass()), (int)element.getPosition()[0], (int)element.getPosition()[1], null); // see javadoc for more info on the parameters
         }
