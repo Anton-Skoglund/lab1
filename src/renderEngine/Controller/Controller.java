@@ -1,4 +1,5 @@
 package renderEngine.Controller;
+import java.awt.*;
 import java.util.Random;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +9,7 @@ import assets.elements.Vehicle;
 import assets.elements.vehicles.cars.VehicleFactory;
 import assets.elements.vehicles.motorVehicles;
 import assets.elements.vehicles.cars.passengerCars.Saab95;
+import renderEngine.ModelUpdate;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -20,146 +22,99 @@ import static renderEngine.Controller.CarType.NO_CAR;
 * modifying the model state and the updating the view.
  **/
 
-public class Controller {
+public class Controller extends JPanel{
+    private JPanel gasPanel = new JPanel();
+    private JSpinner amountSpinner = new JSpinner();
+    private int amount = 0;
+    private JLabel gasLabel = new JLabel("Gas/Brake #");
+    private JButton gasButton = new JButton("Gas");
+    private JButton brakeButton = new JButton("Brake");
+    private JButton addCar = new JButton("Add Car");
+    private JButton removeCar = new JButton("Remove Car 😎");
+
+    private JSpinner carSpinner = new JSpinner(new SpinnerListModel(CarType.values()));
+    private CarType selectedCarType = CarType.NO_CAR;
+    private JButton extendTrayButton = new JButton("Scania Extend Tray");
+    private JButton retractTrayButton = new JButton("Retract Tray");
+
+    private JButton startButton = new JButton("Start all cars");
+    private JButton stopButton = new JButton("Stop all cars");
 
 
-    private final ControllerUI UI = new ControllerUI();
-    private ArrayList<Element> elementsOnScreen = new ArrayList<>();
-
-    public Controller(ArrayList<Element> elementsOnScreen) {
-        this.elementsOnScreen = elementsOnScreen;
+    public void initUI(JFrame frame, Controller controller) {
+        createSpinnerModel();
+        createGasPanel();
+        createUI(frame);
+        createButton(frame, startButton, Color.blue, Color.green);
+        createButton(frame, stopButton, Color.red, Color.black);
+        addActionListenerToAllButtons(controller);
     }
 
-    // Calls the gas method for each car once
-    void gas(int amount) {
-        double gasAmount = ((double) amount) / 100;
-        for (Element motorVehicle : elementsOnScreen) {
-            if (motorVehicle instanceof motorVehicles) {
-                ((motorVehicles) motorVehicle).gas(gasAmount);
-            }
-        }
-    }
-    void brake(int amount) {
-        double brakeAmount = ((double) amount) / 100;
-        for (Element motorVehicle : elementsOnScreen) {
-            if (motorVehicle instanceof motorVehicles){
-                ((motorVehicles) motorVehicle).brake(brakeAmount);
-            }
-        }
-    }
+    private void createUI(JFrame frame) {
+        this.setLayout(new GridLayout(2,6));
+        this.add(gasPanel, 0);
+        this.add(gasButton, 1);
+        this.add(addCar, 2);
+        this.add(extendTrayButton, 3);
+        this.add(startButton, 4);
 
-    void turboOn() {
-        for (Element motorVehicle : elementsOnScreen){
-            if (motorVehicle instanceof Saab95){
-                ((Saab95) motorVehicle).setTurboOn();
-            }
-        }
+        this.add(carSpinner, 5);
+        this.add(brakeButton, 6);
+        this.add(removeCar, 7);
+        this.add(retractTrayButton, 8);
+        this.add(stopButton, 9);
+
+        this.setPreferredSize(new Dimension((frame.getWidth())-100, 200));
+        this.setBackground(Color.CYAN);
     }
 
-    void turboOff() {
-        for (Element motorVehicle : elementsOnScreen){
-            if (motorVehicle instanceof Saab95){
-                ((Saab95) motorVehicle).setTurboOff();
-            }
-        }
+
+    private void createButton(JFrame frame, JButton startButton, Color blue, Color green) {
+        startButton.setBackground(blue);
+        startButton.setForeground(green);
+        startButton.setPreferredSize(new Dimension(frame.getWidth() / 5 - 15, 200));
     }
 
-    void start() {
-        for (Element motorVehicle : elementsOnScreen
-        ) {
-            if (motorVehicle instanceof motorVehicles) {
-                ((motorVehicles) motorVehicle).start();
-            }
-        }
+
+    private void addActionListenerToAllButtons(Controller controller) {
+        gasButton.addActionListener(e -> ModelUpdate.gas(amount));
+
+        brakeButton.addActionListener(e -> ModelUpdate.brake(amount));
+
+        startButton.addActionListener(e -> ModelUpdate.start());
+
+        stopButton.addActionListener(e -> ModelUpdate.stop());
+
+
+        addCar.addActionListener(e -> {
+            CarType selectedCarType = (CarType) carSpinner.getValue();
+            ModelUpdate.addCar(selectedCarType);
+        });
+        removeCar.addActionListener(e -> ModelUpdate.removeCar());
     }
 
-    void stop() {
-        for (Element motorVehicle : elementsOnScreen
-        ) {
-            if (motorVehicle instanceof motorVehicles) {
-                ((motorVehicles) motorVehicle).stop();
-            }
-        }
+
+    private void createGasPanel() {
+        gasPanel.setLayout(new BorderLayout());
+        gasPanel.add(gasLabel, BorderLayout.PAGE_START);
+        gasPanel.add(amountSpinner, BorderLayout.PAGE_END);
     }
 
-    void addCar(CarType car){
-        Vehicle currentCar;
-        if (elementsOnScreen.size() < 10){
-            if(car == NO_CAR){
-                currentCar = getRandomCar();
-            }
-            else {
-                currentCar = createGivenCar(car);
-            }
-            setRandomElementAngle(currentCar);
-        }
+
+    private void createSpinnerModel() {
+        SpinnerModel spinnerModel =
+                new SpinnerNumberModel(0, //initial value
+                        0, //min
+                        100, //max
+                        1);//step
+        amountSpinner = new JSpinner(spinnerModel);
+        amountSpinner.addChangeListener(e -> amount = (int) ((JSpinner)e.getSource()).getValue());
     }
-
-    private static void setRandomElementAngle(Element element) {
-        element.setRotation(getRandomFloat(0, 360));
-    }
-
-    private Vehicle createGivenCar(CarType car) {
-        Vehicle currentCar;
-        currentCar = createVehicle(car);
-        elementsOnScreen.add(currentCar);
-        return currentCar;
-    }
-
-    private Vehicle getRandomCar() {
-        Vehicle currentCar;
-        CarType[] allCarTypes = CarType.values();
-
-        // Filter out NO_CAR
-        List<CarType> carTypesWithoutNoCar = getListWithout(allCarTypes, NO_CAR);
-
-        CarType randomCar = getRandomElement(carTypesWithoutNoCar);
-        currentCar = createVehicle(randomCar);
-        elementsOnScreen.add(currentCar);
-        return currentCar;
-    }
-
-    private static <T> List<T> getListWithout(T[] allCarTypes, Object object) {
-        return Arrays.stream(allCarTypes)
-                .filter(carType -> carType != object)
-                .collect(Collectors.toList());
-    }
-
-    void removeCar(){
-        if (!elementsOnScreen.isEmpty()) {
-            elementsOnScreen.remove(getRandomElement(elementsOnScreen));
-        }
-    }
-
     // -- CONTROLLER UI --
 
     public void addControlPanelToFrame(JFrame frame){
-        UI.initUI(frame, this);
-        frame.add(UI);
+        initUI(frame, this);
+        frame.add(this);
     }
 
-    private static <T> T getRandomElement(List<T> list) {
-        if (list == null || list.isEmpty()) {
-            throw new IllegalArgumentException("List is null or empty");
-        }
-
-        Random random = new Random();
-        int randomIndex = random.nextInt(list.size());
-        return list.get(randomIndex);
-    }
-
-    private static float getRandomFloat(float start, float stop){
-        Random random = new Random();
-        return (stop - start) * random.nextFloat() + start;
-    }
-
-    private static Vehicle createVehicle(CarType carType) {
-        // Use the CarFactory to create the specified car type
-        return switch (carType) {
-            case SAAB -> VehicleFactory.createSaab();
-            case VOLVO -> VehicleFactory.createVolvo();
-            case SCANIA -> VehicleFactory.createScania();
-            default -> throw new IllegalArgumentException("Unknown car type: " + carType);
-        };
-    }
 }

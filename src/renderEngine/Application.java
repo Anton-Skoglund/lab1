@@ -15,7 +15,7 @@ public class Application {
     public static void main(String[] args) {
         SimulationTimer simulationTimer = new SimulationTimer();
         ArrayList<Element> elementsOnScreen = new ArrayList<>();
-        Controller controller = new Controller(elementsOnScreen);
+        Controller controller = new Controller();
         View view = new View("DrivingSim 1.0", controller, elementsOnScreen);
         ModelUpdate modelUpdate = new ModelUpdate(elementsOnScreen);
         simulationTimer.addObserver(modelUpdate);
