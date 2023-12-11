@@ -33,23 +33,19 @@ public class Controller extends JPanel{
 
     private JButton startButton = new JButton("Start all cars");
     private JButton stopButton = new JButton("Stop all cars");
-    @Override
-    public int getHeight(){
-        return height;
-    }
 
     public void addControlPanelToFrame(JFrame frame){
-        initUI(frame, this);
+        initUI(frame);
         frame.add(this);
     }
 
-    public void initUI(JFrame frame, Controller controller) {
+    protected void initUI(JFrame frame) {
         createSpinnerModel();
         createGasPanel();
         createUI(frame);
         createButton(frame, startButton, Color.blue, Color.green);
         createButton(frame, stopButton, Color.red, Color.black);
-        addActionListenerToAllButtons(controller);
+        addActionListenerToAllButtons();
     }
 
     private void createUI(JFrame frame) {
@@ -72,14 +68,11 @@ public class Controller extends JPanel{
         this.setBackground(Color.CYAN);
     }
 
-
     private void createButton(JFrame frame, JButton button, Color background, Color foreground) {
         button.setBackground(background);
         button.setForeground(foreground);
     }
-
-
-    private void addActionListenerToAllButtons(Controller controller) {
+    private void addActionListenerToAllButtons() {
         gasButton.addActionListener(e -> InputLogic.gas(amount));
         brakeButton.addActionListener(e -> InputLogic.brake(amount));
 
@@ -105,8 +98,6 @@ public class Controller extends JPanel{
         gasPanel.add(gasLabel, BorderLayout.PAGE_START);
         gasPanel.add(amountSpinner, BorderLayout.PAGE_END);
     }
-
-
     private void createSpinnerModel() {
         SpinnerModel spinnerModel =
                 new SpinnerNumberModel(0, //initial value
