@@ -1,5 +1,5 @@
 package assets.elements.vehicles.cars;
-import assets.elements.vehicles.Car;
+import assets.elements.vehicles.motorVehicles;
 import assets.elements.vehicles.engines.Engine;
 
 import java.awt.*;
@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * A Truck is a Car extended with a tray, the tray can retract and extend.
  */
-public abstract class Truck extends Car {
+public abstract class Truck extends motorVehicles {
 
     private boolean trayRetracted; // true if tray is in its retracted position
 

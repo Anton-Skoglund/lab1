@@ -1,4 +1,4 @@
-import assets.elements.vehicles.Car;
+import assets.elements.vehicles.motorVehicles;
 import assets.elements.vehicles.cars.passengerCars.Volvo240;
 
 import java.awt.*;
@@ -6,14 +6,14 @@ import java.util.Arrays;
 
 public class DebugGetInfo {
 
-    public static void getInfo(Car car){
-        System.out.println("Col: " + car.getColor());
-        System.out.println("Doors: " + car.getNrDoors());
-        System.out.println("Pow: " + car.getEngine().getMaxEnginePower());
-        System.out.println("Speed: " + car.getSpeed());
+    public static void getInfo(motorVehicles motorVehicles){
+        System.out.println("Col: " + motorVehicles.getColor());
+        System.out.println("Doors: " + motorVehicles.getNrDoors());
+        System.out.println("Pow: " + motorVehicles.getEngine().getMaxEnginePower());
+        System.out.println("Speed: " + motorVehicles.getSpeed());
 
-        System.out.println("Rot: " + car.getRotation());
-        System.out.println("Pos: " + Arrays.toString(car.getPosition()));
+        System.out.println("Rot: " + motorVehicles.getRotation());
+        System.out.println("Pos: " + Arrays.toString(motorVehicles.getPosition()));
 
         System.out.println();
     }

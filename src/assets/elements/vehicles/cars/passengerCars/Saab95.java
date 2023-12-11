@@ -25,10 +25,10 @@ public final class Saab95 extends PassengerCar {
      * <p>Weight: 1400 kg</p>
      * <p></i>
      */
+
     public Saab95(){
         super(5,2, turboEngine, "Saab95", Color.red, 1.5, 1400);
     }
-
     /**
      * Turn on the turbo
      */

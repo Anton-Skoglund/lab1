@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class TestCar {
+public class TestMotorVehicles {
     private static class CursedCar extends PassengerCar {
         public CursedCar(double cursedTrimFactor){
             super(-1, 0, new TrimmedEngine(100,  cursedTrimFactor, 50000), "😎", Color.MAGENTA, 10, 0);

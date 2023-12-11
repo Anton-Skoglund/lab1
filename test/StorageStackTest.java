@@ -1,4 +1,4 @@
-import assets.elements.vehicles.Car;
+import assets.elements.vehicles.motorVehicles;
 import assets.elements.vehicles.boats.motorizedBoats.Ferry2000;
 import assets.elements.vehicles.cars.trucks.ScaniaL280;
 import assets.storages.StorageStack;
@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class StorageStackTest {
 
     StorageStack<Ferry2000> stack;
-    Car scania;
+    motorVehicles scania;
     @Before
     public void setUp(){
         scania = new ScaniaL280();

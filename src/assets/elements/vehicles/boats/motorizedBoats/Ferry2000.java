@@ -1,6 +1,6 @@
 package assets.elements.vehicles.boats.motorizedBoats;
 
-import assets.elements.vehicles.Car;
+import assets.elements.vehicles.motorVehicles;
 import assets.elements.vehicles.engines.Engine;
 import assets.elements.vehicles.boats.MotorizedBoat;
 import assets.storages.Storage;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * A car can only be loaded to the back of the Ferry2000, and unloaded from the front.
  */
 public class Ferry2000 extends MotorizedBoat {
-    private final ArrayList<StorageQueue<Car>> lanes;
+    private final ArrayList<StorageQueue<motorVehicles>> lanes;
     private final int laneCount;
     private static final double reach = 5;
 
@@ -44,21 +44,21 @@ public class Ferry2000 extends MotorizedBoat {
 
     /**
      * Load a car to a lane
-     * @param car car to load
+     * @param motorVehicles car to load
      * @param laneNr lane to load car to
      */
-    public void loadCar(Car car, int laneNr){
+    public void loadCar(motorVehicles motorVehicles, int laneNr){
         if (laneNr <= 0 | laneNr > laneCount){
             System.out.println("That lane number does not exist!");
             return;
         }
 
-        if (distanceTo(car) > reach) {
-            System.out.printf("%s is too far away%n", car);
+        if (distanceTo(motorVehicles) > reach) {
+            System.out.printf("%s is too far away%n", motorVehicles);
             return;
         }
 
-        lanes.get(laneNr - 1).add(car);
+        lanes.get(laneNr - 1).add(motorVehicles);
     }
 
     /**
@@ -66,7 +66,7 @@ public class Ferry2000 extends MotorizedBoat {
      * @param laneNr lane to unload car from
      * @return the unloaded car
      */
-    public Car unloadCar(int laneNr){
+    public motorVehicles unloadCar(int laneNr){
         if (laneNr <= 0 | laneNr > laneCount){
             System.out.println("That lane number does not exist!");
             return null;
@@ -80,9 +80,9 @@ public class Ferry2000 extends MotorizedBoat {
     @Override
     public double getWeight() {
         double w = 0;
-        for (Storage<Car> storage : lanes) {
-            for (Car car : storage.getStorageItems()) {
-                w += car.getWeight();
+        for (Storage<motorVehicles> storage : lanes) {
+            for (motorVehicles motorVehicles : storage.getStorageItems()) {
+                w += motorVehicles.getWeight();
             }
         }
         return super.getWeight() + w;

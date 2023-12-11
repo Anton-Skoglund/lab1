@@ -1,4 +1,4 @@
-import assets.elements.vehicles.Car;
+import assets.elements.vehicles.motorVehicles;
 import assets.elements.vehicles.boats.motorizedBoats.Ferry2000;
 import assets.elements.vehicles.cars.passengerCars.Saab95;
 import assets.elements.vehicles.cars.passengerCars.Volvo240;
@@ -19,8 +19,8 @@ public class Ferry2000Test {
     public void unloadedCarFromLane2ShouldBeCarLoadedToLane2() {
         ferry.loadCar(new Saab95(), 1);
         ferry.loadCar(new Volvo240(), 2);
-        Car unloadedCar = ferry.unloadCar(2);
-        assertEquals("Volvo240", unloadedCar.getModelName());
+        motorVehicles unloadedMotorVehicles = ferry.unloadCar(2);
+        assertEquals("Volvo240", unloadedMotorVehicles.getModelName());
     }
 
 

@@ -1,5 +1,5 @@
 package assets.elements.vehicles.cars.trucks;
-import assets.elements.vehicles.Car;
+import assets.elements.vehicles.motorVehicles;
 import assets.elements.vehicles.engines.Engine;
 import assets.elements.vehicles.cars.Truck;
 import assets.storages.StorageStack;
@@ -14,7 +14,7 @@ import java.awt.*;
  * and extended to load or unload cars.
  */
 public final class ManTGX extends Truck {
-    private final StorageStack<Car> storage;
+    private final StorageStack<motorVehicles> storage;
     private static final int maxStorageSize = 6;
     private static final double reach = 5;
     private static final double maxHeight = 2;
@@ -60,28 +60,28 @@ public final class ManTGX extends Truck {
 
     /**
      * Load a car to the ManTGX
-     * @param car the car to load
+     * @param motorVehicles the car to load
      */
-    public void loadCar(Car car) {
+    public void loadCar(motorVehicles motorVehicles) {
         if (isTrayRetracted()){
             System.out.println("Tray needs to be extended to load car");
             return;
         }
-        if (car instanceof ManTGX) {
+        if (motorVehicles instanceof ManTGX) {
             System.out.println("ManTGX cannot carry other ManTGX's");
             return;
         }
-        if (car.getHeight() > maxHeight) {
-            System.out.printf("%s is too high%n", car);
+        if (motorVehicles.getHeight() > maxHeight) {
+            System.out.printf("%s is too high%n", motorVehicles);
             return;
         }
 
-        if (distanceTo(car) > reach) {
-            System.out.printf("%s is too far away%n", car);
+        if (distanceTo(motorVehicles) > reach) {
+            System.out.printf("%s is too far away%n", motorVehicles);
             return;
         }
 
-        storage.add(car);
+        storage.add(motorVehicles);
     }
 
     /**
@@ -114,8 +114,8 @@ public final class ManTGX extends Truck {
     @Override
     public double getWeight() {
         double w = 0;
-        for (Car car : storage.getStorageItems()){
-            w += car.getWeight();
+        for (motorVehicles motorVehicles : storage.getStorageItems()){
+            w += motorVehicles.getWeight();
         }
         return super.getWeight() + w;
     }

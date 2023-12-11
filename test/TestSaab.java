@@ -27,4 +27,6 @@ public class TestSaab {
         assertTrue(saab.getSpeed() > normalSpeed);
     }
 
+
+
 }
