@@ -23,6 +23,10 @@ public class ModelUpdate implements ModelObserver {
     private int minY = 0;
     private int maxY = frameHeight - controllerHeight - heightOfCar;
 
+    public ModelUpdate(ArrayList<Element> elementsOnScreen){
+        this.elementsOnScreen = elementsOnScreen;
+    }
+
     @Override
     public void update(){
         for (Element motorVehicle : elementsOnScreen) {
