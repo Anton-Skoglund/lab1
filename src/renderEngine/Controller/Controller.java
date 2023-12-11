@@ -29,17 +29,23 @@ public class Controller extends JPanel{
     private JLabel gasLabel = new JLabel("Gas/Brake #");
     private JButton gasButton = new JButton("Gas");
     private JButton brakeButton = new JButton("Brake");
-    private JButton addCar = new JButton("Add Car");
-    private JButton removeCar = new JButton("Remove Car 😎");
+    private JButton addCar = new JButton("+Car");
+    private JButton removeCar = new JButton("-Car");
 
     private JSpinner carSpinner = new JSpinner(new SpinnerListModel(CarType.values()));
     private CarType selectedCarType = CarType.NO_CAR;
-    private JButton extendTrayButton = new JButton("Scania Extend Tray");
+    private JButton extendTrayButton = new JButton("Extend Tray");
     private JButton retractTrayButton = new JButton("Retract Tray");
+    private JButton turboOnButton = new JButton("Turbo On");
+    private JButton turboOffButton = new JButton("Turbo Off");
 
     private JButton startButton = new JButton("Start all cars");
     private JButton stopButton = new JButton("Stop all cars");
 
+    public void addControlPanelToFrame(JFrame frame){
+        initUI(frame, this);
+        frame.add(this);
+    }
 
     public void initUI(JFrame frame, Controller controller) {
         createSpinnerModel();
@@ -52,17 +58,19 @@ public class Controller extends JPanel{
 
     private void createUI(JFrame frame) {
         this.setLayout(new GridLayout(2,6));
-        this.add(gasPanel, 0);
-        this.add(gasButton, 1);
-        this.add(addCar, 2);
-        this.add(extendTrayButton, 3);
-        this.add(startButton, 4);
+        this.add(gasPanel,          0);
+        this.add(gasButton,         1);
+        this.add(addCar,            2);
+        this.add(extendTrayButton,  3);
+        this.add(turboOnButton,     4);
+        this.add(startButton,       5);
 
-        this.add(carSpinner, 5);
-        this.add(brakeButton, 6);
-        this.add(removeCar, 7);
-        this.add(retractTrayButton, 8);
-        this.add(stopButton, 9);
+        this.add(carSpinner,        6);
+        this.add(brakeButton,       7);
+        this.add(removeCar,         8);
+        this.add(retractTrayButton, 9);
+        this.add(turboOffButton,    10);
+        this.add(stopButton,        11);
 
         this.setPreferredSize(new Dimension((frame.getWidth())-100, 200));
         this.setBackground(Color.CYAN);
@@ -78,13 +86,16 @@ public class Controller extends JPanel{
 
     private void addActionListenerToAllButtons(Controller controller) {
         gasButton.addActionListener(e -> ModelUpdate.gas(amount));
-
         brakeButton.addActionListener(e -> ModelUpdate.brake(amount));
 
         startButton.addActionListener(e -> ModelUpdate.start());
-
         stopButton.addActionListener(e -> ModelUpdate.stop());
 
+        turboOnButton.addActionListener(e -> ModelUpdate.turboOn());
+        turboOffButton.addActionListener(e -> ModelUpdate.turboOff());
+
+        extendTrayButton.addActionListener(e -> ModelUpdate.extendTray());
+        retractTrayButton.addActionListener(e -> ModelUpdate.retractTray());
 
         addCar.addActionListener(e -> {
             CarType selectedCarType = (CarType) carSpinner.getValue();
@@ -110,11 +121,4 @@ public class Controller extends JPanel{
         amountSpinner = new JSpinner(spinnerModel);
         amountSpinner.addChangeListener(e -> amount = (int) ((JSpinner)e.getSource()).getValue());
     }
-    // -- CONTROLLER UI --
-
-    public void addControlPanelToFrame(JFrame frame){
-        initUI(frame, this);
-        frame.add(this);
-    }
-
 }

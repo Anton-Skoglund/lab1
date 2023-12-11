@@ -5,6 +5,9 @@ import assets.elements.Element;
 import assets.elements.Vehicle;
 import assets.elements.vehicles.cars.VehicleFactory;
 import assets.elements.vehicles.cars.passengerCars.Saab95;
+import assets.elements.vehicles.cars.passengerCars.Volvo240;
+import assets.elements.vehicles.cars.trucks.ManTGX;
+import assets.elements.vehicles.cars.trucks.ScaniaL280;
 import assets.elements.vehicles.motorVehicles;
 import renderEngine.Controller.CarType;
 
@@ -77,55 +80,100 @@ public class ModelUpdate implements ModelObserver{
         }
     }
 
-    public void turboOn() {
-        for (Element motorVehicle : elementsOnScreen){
-            if (motorVehicle instanceof Saab95){
-                ((Saab95) motorVehicle).setTurboOn();
-            }
-        }
-    }
-
-    public void turboOff() {
-        for (Element motorVehicle : elementsOnScreen){
-            if (motorVehicle instanceof Saab95){
-                ((Saab95) motorVehicle).setTurboOff();
-            }
-        }
-    }
-
-    public static void start() {
-        for (Element motorVehicle : elementsOnScreen
-        ) {
-            if (motorVehicle instanceof motorVehicles) {
-                ((motorVehicles) motorVehicle).start();
-            }
-        }
-    }
-
-    public static void stop() {
-        for (Element motorVehicle : elementsOnScreen
-        ) {
-            if (motorVehicle instanceof motorVehicles) {
-                ((motorVehicles) motorVehicle).stop();
-            }
-        }
-    }
-
     public static void addCar(CarType car){
         Vehicle currentCar;
         if (elementsOnScreen.size() < 10){
             if(car == NO_CAR){
                 currentCar = getRandomCar();
+                System.out.println("Random vehicle was added");
+
             }
             else {
                 currentCar = createGivenCar(car);
+                System.out.println(currentCar.getModelName() + " was added");
             }
             setRandomElementAngle(currentCar);
         }
     }
+    public static void removeCar(){
+        if (!elementsOnScreen.isEmpty()) {
+            elementsOnScreen.remove(getRandomElement(elementsOnScreen));
+        }
+        System.out.println("Random car was removed");
 
-    private static void setRandomElementAngle(Element element) {
-        element.setRotation(getRandomFloat(0, 360));
+    }
+
+    public static void turboOn() {
+        for (Element motorVehicle : elementsOnScreen){
+            if (motorVehicle instanceof Saab95){
+                ((Saab95) motorVehicle).setTurboOn();
+            }
+        }
+        System.out.println("Turbo on");
+
+    }
+    public static void turboOff() {
+        for (Element motorVehicle : elementsOnScreen){
+            if (motorVehicle instanceof Saab95){
+                ((Saab95) motorVehicle).setTurboOff();
+            }
+        }
+        System.out.println("Turbo off");
+    }
+
+    public static void extendTray() {
+        for (Element motorVehicle : elementsOnScreen) {
+            if (motorVehicle instanceof ScaniaL280) {
+                ((ScaniaL280) motorVehicle).extendTray(70);
+                System.out.println("ScaniaL280 trey extend");
+            }
+            if (motorVehicle instanceof ManTGX) {
+                ((ManTGX) motorVehicle).extendTray();
+                System.out.println("ManTGX trey retracted");
+            }
+        }
+    }
+    public static void retractTray() {
+        for (Element motorVehicle : elementsOnScreen){
+            if (motorVehicle instanceof ScaniaL280){
+                ((ScaniaL280) motorVehicle).retractTray(70);
+                System.out.println("ScaniaL280 trey retract");
+            }
+            if (motorVehicle instanceof ManTGX){
+                ((ManTGX) motorVehicle).retractTray();
+                System.out.println("ManTGX trey retracted");
+            }
+        }
+    }
+
+    public static void start() {
+        for (Element motorVehicle : elementsOnScreen) {
+            if (motorVehicle instanceof motorVehicles) {
+                ((motorVehicles) motorVehicle).start();
+            }
+        }
+        System.out.println("Start all cars");
+    }
+    public static void stop() {
+        for (Element motorVehicle : elementsOnScreen) {
+            if (motorVehicle instanceof motorVehicles) {
+                ((motorVehicles) motorVehicle).stop();
+            }
+        }
+        System.out.println("Stop all cars");
+
+    }
+
+    /* HELP METHODS */
+
+    private static Vehicle createVehicle(CarType carType) {
+        // Use the CarFactory to create the specified car type
+        return switch (carType) {
+            case SAAB -> VehicleFactory.createSaab();
+            case VOLVO -> VehicleFactory.createVolvo();
+            case SCANIA -> VehicleFactory.createScania();
+            default -> throw new IllegalArgumentException("Unknown car type: " + carType);
+        };
     }
 
     private static Vehicle createGivenCar(CarType car) {
@@ -134,6 +182,13 @@ public class ModelUpdate implements ModelObserver{
         elementsOnScreen.add(currentCar);
         return currentCar;
     }
+
+    private static <T> List<T> getListWithout(T[] allCarTypes, Object object) {
+        return Arrays.stream(allCarTypes)
+                .filter(carType -> carType != object)
+                .collect(Collectors.toList());
+    }
+
 
     private static Vehicle getRandomCar() {
         Vehicle currentCar;
@@ -148,19 +203,6 @@ public class ModelUpdate implements ModelObserver{
         return currentCar;
     }
 
-    private static <T> List<T> getListWithout(T[] allCarTypes, Object object) {
-        return Arrays.stream(allCarTypes)
-                .filter(carType -> carType != object)
-                .collect(Collectors.toList());
-    }
-
-    public static void removeCar(){
-        if (!elementsOnScreen.isEmpty()) {
-            elementsOnScreen.remove(getRandomElement(elementsOnScreen));
-        }
-    }
-
-
     private static <T> T getRandomElement(List<T> list) {
         if (list == null || list.isEmpty()) {
             throw new IllegalArgumentException("List is null or empty");
@@ -171,19 +213,13 @@ public class ModelUpdate implements ModelObserver{
         return list.get(randomIndex);
     }
 
+    private static void setRandomElementAngle(Element element) {
+        element.setRotation(getRandomFloat(0, 360));
+    }
+
+
     private static float getRandomFloat(float start, float stop){
         Random random = new Random();
         return (stop - start) * random.nextFloat() + start;
     }
-
-    private static Vehicle createVehicle(CarType carType) {
-        // Use the CarFactory to create the specified car type
-        return switch (carType) {
-            case SAAB -> VehicleFactory.createSaab();
-            case VOLVO -> VehicleFactory.createVolvo();
-            case SCANIA -> VehicleFactory.createScania();
-            default -> throw new IllegalArgumentException("Unknown car type: " + carType);
-        };
-    }
-
 }
