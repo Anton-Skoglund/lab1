@@ -73,25 +73,62 @@ public class Controller {
         }
     }
 
-    void addCar(CarType car){
-        if(car == NO_CAR){
-            CarType[] allCarTypes = CarType.values();
-
-            // Filter out NO_CAR
-            List<CarType> carTypesWithoutNoCar = Arrays.stream(allCarTypes)
-                    .filter(carType -> carType != CarType.NO_CAR)
-                    .collect(Collectors.toList());
-
-            CarType randomCar = getRandomElement(carTypesWithoutNoCar);
-            elementsOnScreen.add(createVehicle(randomCar));
-        }
-        else {
-            elementsOnScreen.add(createVehicle(car));
+    void stop() {
+        for (Element motorVehicle : elementsOnScreen
+        ) {
+            if (motorVehicle instanceof motorVehicles) {
+                ((motorVehicles) motorVehicle).stop();
+            }
         }
     }
 
-    void removeCar(){
+    void addCar(CarType car){
+        Vehicle currentCar;
+        if (elementsOnScreen.size() < 10){
+            if(car == NO_CAR){
+                currentCar = getRandomCar();
+            }
+            else {
+                currentCar = createGivenCar(car);
+            }
+            setRandomElementAngle(currentCar);
+        }
+    }
 
+    private static void setRandomElementAngle(Element element) {
+        element.setRotation(getRandomFloat(0, 360));
+    }
+
+    private Vehicle createGivenCar(CarType car) {
+        Vehicle currentCar;
+        currentCar = createVehicle(car);
+        elementsOnScreen.add(currentCar);
+        return currentCar;
+    }
+
+    private Vehicle getRandomCar() {
+        Vehicle currentCar;
+        CarType[] allCarTypes = CarType.values();
+
+        // Filter out NO_CAR
+        List<CarType> carTypesWithoutNoCar = getListWithout(allCarTypes, NO_CAR);
+
+        CarType randomCar = getRandomElement(carTypesWithoutNoCar);
+        currentCar = createVehicle(randomCar);
+        elementsOnScreen.add(currentCar);
+        return currentCar;
+    }
+
+    private static <T> List<T> getListWithout(T[] allCarTypes, Object object) {
+        return Arrays.stream(allCarTypes)
+                .filter(carType -> carType != object)
+                .collect(Collectors.toList());
+    }
+
+    void removeCar(){
+        if (!elementsOnScreen.isEmpty()) {
+            elementsOnScreen.remove(getRandomElement(elementsOnScreen));
+        }
     }
 
     // -- CONTROLLER UI --
@@ -109,6 +146,11 @@ public class Controller {
         Random random = new Random();
         int randomIndex = random.nextInt(list.size());
         return list.get(randomIndex);
+    }
+
+    private static float getRandomFloat(float start, float stop){
+        Random random = new Random();
+        return (stop - start) * random.nextFloat() + start;
     }
 
     private static Vehicle createVehicle(CarType carType) {

@@ -12,9 +12,8 @@ public class SimulationTimer {
 
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    //TODO
-    // BAD PUBLIC
-    public Timer timer = new Timer(delay, new TimerListener());
+
+    private Timer timer = new Timer(delay, new TimerListener());
     private List<ModelObserver> modelObservers = new ArrayList<>();
 
     /** Each step the TimerListener moves all the cars in the list and tells the
@@ -24,6 +23,10 @@ public class SimulationTimer {
         public void actionPerformed(ActionEvent e) {
             modelUpdate();
         }
+    }
+
+    public void startTimer(){
+        timer.start();
     }
 
     public void addObserver(ModelObserver modelObserver) {

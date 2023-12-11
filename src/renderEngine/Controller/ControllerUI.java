@@ -37,19 +37,18 @@ public class ControllerUI extends JPanel {
     }
 
     private void createUI(JFrame frame) {
-        this.setLayout(new GridLayout(2,5));
+        this.setLayout(new GridLayout(2,6));
         this.add(gasPanel, 0);
         this.add(gasButton, 1);
         this.add(addCar, 2);
         this.add(extendTrayButton, 3);
         this.add(startButton, 4);
 
-        this.add(new JPanel(), 5);
+        this.add(carSpinner, 5);
         this.add(brakeButton, 6);
         this.add(removeCar, 7);
         this.add(retractTrayButton, 8);
         this.add(stopButton, 9);
-        this.add(carSpinner, 10);
 
         this.setPreferredSize(new Dimension((frame.getWidth())-100, 200));
         this.setBackground(Color.CYAN);
@@ -64,20 +63,20 @@ public class ControllerUI extends JPanel {
 
 
     private void addActionListenerToAllButtons(Controller controller) {
-        //TODO
-        // - Can probably make lambda function for it or some shit
-
         gasButton.addActionListener(e -> controller.gas(amount));
 
         brakeButton.addActionListener(e -> controller.brake(amount));
 
         startButton.addActionListener(e -> controller.start());
 
+        stopButton.addActionListener(e -> controller.stop());
+
+
         addCar.addActionListener(e -> {
             CarType selectedCarType = (CarType) carSpinner.getValue();
             controller.addCar(selectedCarType);
         });
-        addCar.addActionListener(e -> controller.removeCar());
+        removeCar.addActionListener(e -> controller.removeCar());
     }
 
 

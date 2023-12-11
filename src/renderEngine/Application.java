@@ -14,8 +14,6 @@ public class Application {
 
     public static void main(String[] args) {
         SimulationTimer simulationTimer = new SimulationTimer();
-        //TODO
-        // - STUPID BOTH HAVE MOTOR VEHICLES
         ArrayList<Element> elementsOnScreen = new ArrayList<>();
         Controller controller = new Controller(elementsOnScreen);
         View view = new View("DrivingSim 1.0", controller, elementsOnScreen);
@@ -23,6 +21,6 @@ public class Application {
         simulationTimer.addObserver(modelUpdate);
         simulationTimer.addObserver(view);
 
-        simulationTimer.timer.start();
+        simulationTimer.startTimer();
     }
 }

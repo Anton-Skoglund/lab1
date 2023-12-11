@@ -1,7 +1,7 @@
 package renderEngine.Controller;
 
 public enum CarType {
-    NO_CAR("l"),
+    NO_CAR(""),
     SAAB("Saab"),
     VOLVO("Volvo"),
     SCANIA("Scania");
@@ -13,6 +13,11 @@ public enum CarType {
     }
 
     public String getTypeName() {
+        return typeName;
+    }
+
+    @Override
+    public String toString() {
         return typeName;
     }
 }
