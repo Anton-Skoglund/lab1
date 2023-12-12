@@ -4,8 +4,8 @@ import assets.elements.Element;
 import assets.elements.Vehicle;
 import assets.elements.vehicles.cars.VehicleFactory;
 import renderEngine.Controller.CarType;
+import renderEngine.ElementsToRender;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -24,10 +24,10 @@ public class ModelUtilities {
         };
     }
 
-    static Vehicle createGivenCar(CarType car, ArrayList<Element> elementsOnScreen) {
+    static Vehicle createGivenCar(CarType car, ElementsToRender elementsToRender) {
         Vehicle currentCar;
         currentCar = createVehicle(car);
-        elementsOnScreen.add(currentCar);
+        elementsToRender.add(currentCar);
         return currentCar;
     }
 
@@ -38,7 +38,7 @@ public class ModelUtilities {
     }
 
 
-    static Vehicle getRandomCar(ArrayList<Element> elementsOnScreen) {
+    static Vehicle getRandomCar(ElementsToRender elementsToRender) {
         Vehicle currentCar;
         CarType[] allCarTypes = CarType.values();
 
@@ -47,7 +47,7 @@ public class ModelUtilities {
 
         CarType randomCar = getRandomElement(carTypesWithoutNoCar);
         currentCar = createVehicle(randomCar);
-        elementsOnScreen.add(currentCar);
+        elementsToRender.add(currentCar);
         return currentCar;
     }
 

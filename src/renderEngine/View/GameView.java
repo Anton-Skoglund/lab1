@@ -4,12 +4,14 @@ import assets.elements.Element;
 import assets.elements.vehicles.cars.passengerCars.Saab95;
 import assets.elements.vehicles.cars.passengerCars.Volvo240;
 import assets.elements.vehicles.cars.trucks.ScaniaL280;
+import renderEngine.ElementsToRender;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import static java.util.Map.entry;
@@ -17,6 +19,8 @@ import static java.util.Map.entry;
 // This panel represent the animated part of the view with the car images.
 
 public class GameView extends JPanel{
+    private static ElementsToRender elementsToRender = ElementsToRender.getInstance();
+
     boolean background = true;
     BufferedImage backgroundImage = getImage("../pics/background.jpg");
 
@@ -25,7 +29,8 @@ public class GameView extends JPanel{
             entry(Saab95.class, getImage("../pics/Saab95.jpg")),
             entry(ScaniaL280.class, getImage("../pics/Scania.jpg")
             ));
-    ArrayList<Element> elementsOnScreen;
+
+
 
     private BufferedImage getImage(String path){
         try{
@@ -36,8 +41,7 @@ public class GameView extends JPanel{
         return null;
     }
     // Initializes the panel and reads the images
-    public GameView(int x, int y, ArrayList<Element> elementsOnScreen) {
-        this.elementsOnScreen = elementsOnScreen;
+    public GameView(int x, int y) {
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
     }
@@ -48,7 +52,7 @@ public class GameView extends JPanel{
         if (background){
             g.drawImage(backgroundImage, 0, 0, null);
         }
-        for (Element element : elementsOnScreen){
+        for (Element element : elementsToRender){
             g.drawImage(imagePaths.get(element.getClass()), (int)element.getPosition()[0], (int)element.getPosition()[1], null); // see javadoc for more info on the parameters
         }
     }

@@ -2,16 +2,9 @@ package renderEngine.Controller;
 import java.awt.*;
 
 import renderEngine.Model.InputLogic;
-import renderEngine.Model.ModelUpdate;
 import renderEngine.View.View;
 
 import javax.swing.*;
-
-/**
-* This class represents the Controller part in the MVC pattern.
-* Its responsibilities are to listen to the View and responds in an appropriate manner by
-* modifying the model state and the updating the view.
- **/
 
 public class Controller extends JPanel{
     private int height = View.controllerHeight;
@@ -43,8 +36,8 @@ public class Controller extends JPanel{
         createSpinnerModel();
         createGasPanel();
         createUI(frame);
-        createButton(frame, startButton, Color.blue, Color.green);
-        createButton(frame, stopButton, Color.red, Color.black);
+        createButton(startButton, Color.blue, Color.green);
+        createButton(stopButton, Color.red, Color.black);
         addActionListenerToAllButtons();
     }
 
@@ -68,7 +61,7 @@ public class Controller extends JPanel{
         this.setBackground(Color.CYAN);
     }
 
-    private void createButton(JFrame frame, JButton button, Color background, Color foreground) {
+    private void createButton(JButton button, Color background, Color foreground) {
         button.setBackground(background);
         button.setForeground(foreground);
     }

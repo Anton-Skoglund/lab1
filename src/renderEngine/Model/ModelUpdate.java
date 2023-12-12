@@ -2,14 +2,11 @@ package renderEngine.Model;
 
 import assets.elements.ActiveElement;
 import assets.elements.Element;
+import renderEngine.ElementsToRender;
 import renderEngine.View.View;
 
-import java.util.ArrayList;
-import javax.swing.*;
-
-
 public class ModelUpdate implements ModelObserver {
-    static protected ArrayList<Element> elementsOnScreen;
+    private ElementsToRender elementsToRender = ElementsToRender.getInstance();
 
     private static int frameWidth = View.width;
     private static int frameHeight = View.height;
@@ -19,17 +16,29 @@ public class ModelUpdate implements ModelObserver {
 
     private int minX = 0;
     private int maxX = frameWidth - widthOfCar;
-
     private int minY = 0;
     private int maxY = frameHeight - controllerHeight - heightOfCar;
 
-    public ModelUpdate(ArrayList<Element> elementsOnScreen){
-        this.elementsOnScreen = elementsOnScreen;
+    private static ModelUpdate INSTANCE;
+
+    /**
+     * Singleton
+     */
+    private ModelUpdate(){}
+
+    public static ModelUpdate getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new ModelUpdate();
+        }
+        return INSTANCE;
     }
 
+    /**
+     * Update forced by ModelObserver.java
+     */
     @Override
     public void update(){
-        for (Element motorVehicle : elementsOnScreen) {
+        for (Element motorVehicle : elementsToRender) {
             if (motorVehicle instanceof ActiveElement) {
                 if (motorVehicle.getPosition()[0] > maxX || motorVehicle.getPosition()[0] < minX) {
                     double rot = motorVehicle.getRotation();

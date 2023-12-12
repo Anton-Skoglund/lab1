@@ -8,19 +8,16 @@ import assets.elements.vehicles.cars.trucks.ScaniaL280;
 import assets.elements.vehicles.motorVehicles;
 import renderEngine.Controller.CarType;
 
-import java.util.ArrayList;
-
-import renderEngine.Model.ModelUtilities;
-
+import renderEngine.ElementsToRender;
 import static renderEngine.Controller.CarType.NO_CAR;
 
 public class InputLogic {
-    private static ArrayList<Element> elementsOnScreen =  ModelUpdate.elementsOnScreen;
+    private static ElementsToRender elementsToRender = ElementsToRender.getInstance();
 
     // Calls the gas method for each car once
     public static void gas(int amount) {
         double gasAmount = ((double) amount) / 100;
-        for (Element motorVehicle : elementsOnScreen) {
+        for (Element motorVehicle : elementsToRender) {
             if (motorVehicle instanceof motorVehicles) {
                 ((motorVehicles) motorVehicle).gas(gasAmount);
             }
@@ -29,7 +26,7 @@ public class InputLogic {
     }
     public static void brake(int amount) {
         double brakeAmount = ((double) amount) / 100;
-        for (Element motorVehicle : elementsOnScreen) {
+        for (Element motorVehicle : elementsToRender) {
             if (motorVehicle instanceof motorVehicles){
                 ((motorVehicles) motorVehicle).brake(brakeAmount);
             }
@@ -39,29 +36,29 @@ public class InputLogic {
 
     public static void addCar(CarType car){
         Vehicle currentCar;
-        if (elementsOnScreen.size() < 10){
+        if (elementsToRender.size() < 10){
             if(car == NO_CAR){
-                currentCar = ModelUtilities.getRandomCar(elementsOnScreen);
+                currentCar = ModelUtilities.getRandomCar(elementsToRender);
                 System.out.println("Random vehicle was added");
 
             }
             else {
-                currentCar = ModelUtilities.createGivenCar(car, elementsOnScreen);
+                currentCar = ModelUtilities.createGivenCar(car, elementsToRender);
                 System.out.println(currentCar.getModelName() + " was added");
             }
             ModelUtilities.setRandomElementAngle(currentCar);
         }
     }
     public static void removeCar(){
-        if (!elementsOnScreen.isEmpty()) {
-            elementsOnScreen.remove(ModelUtilities.getRandomElement(elementsOnScreen));
+        if (!elementsToRender.isEmpty()) {
+            elementsToRender.remove(ModelUtilities.getRandomElement(elementsToRender));
         }
         System.out.println("Random car was removed");
 
     }
 
     public static void turboOn() {
-        for (Element motorVehicle : elementsOnScreen){
+        for (Element motorVehicle : elementsToRender){
             if (motorVehicle instanceof Saab95){
                 ((Saab95) motorVehicle).setTurboOn();
             }
@@ -70,7 +67,7 @@ public class InputLogic {
 
     }
     public static void turboOff() {
-        for (Element motorVehicle : elementsOnScreen){
+        for (Element motorVehicle : elementsToRender){
             if (motorVehicle instanceof Saab95){
                 ((Saab95) motorVehicle).setTurboOff();
             }
@@ -79,7 +76,7 @@ public class InputLogic {
     }
 
     public static void extendTray() {
-        for (Element motorVehicle : elementsOnScreen) {
+        for (Element motorVehicle : elementsToRender) {
             if (motorVehicle instanceof ScaniaL280) {
                 ((ScaniaL280) motorVehicle).extendTray(70);
                 System.out.println("ScaniaL280 trey extend");
@@ -91,7 +88,7 @@ public class InputLogic {
         }
     }
     public static void retractTray() {
-        for (Element motorVehicle : elementsOnScreen){
+        for (Element motorVehicle : elementsToRender){
             if (motorVehicle instanceof ScaniaL280){
                 ((ScaniaL280) motorVehicle).retractTray(70);
                 System.out.println("ScaniaL280 trey retract");
@@ -104,7 +101,7 @@ public class InputLogic {
     }
 
     public static void start() {
-        for (Element motorVehicle : elementsOnScreen) {
+        for (Element motorVehicle : elementsToRender) {
             if (motorVehicle instanceof motorVehicles) {
                 ((motorVehicles) motorVehicle).start();
             }
@@ -112,7 +109,7 @@ public class InputLogic {
         System.out.println("Start all cars");
     }
     public static void stop() {
-        for (Element motorVehicle : elementsOnScreen) {
+        for (Element motorVehicle : elementsToRender) {
             if (motorVehicle instanceof motorVehicles) {
                 ((motorVehicles) motorVehicle).stop();
             }
