@@ -3,7 +3,7 @@ package renderEngine.Model;
 import assets.elements.ActiveElement;
 import assets.elements.Element;
 import renderEngine.ElementsToRender;
-import renderEngine.View.View;
+import renderEngine.View.*;
 
 public class ModelUpdate implements ModelObserver {
     private ElementsToRender elementsToRender = ElementsToRender.getInstance();
