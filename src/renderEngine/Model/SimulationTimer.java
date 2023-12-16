@@ -1,4 +1,4 @@
-package renderEngine;
+package renderEngine.Model;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -7,27 +7,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimulationTimer {
+    /**
+     * We count this to the model but separate for cleaner code
+     * you could put it in ModelUpdate.java or a new one
+     **/
     // 20 updates per second = 50ms
     private final int delay = 50;
-
-    // The timer is started with a listener (see below) that executes the statements
-    // each step between delays.
-
     private Timer timer = new Timer(delay, new TimerListener());
+    private static SimulationTimer INSTANCE;
     private List<ModelObserver> modelObservers = new ArrayList<>();
 
-    /** Each step the TimerListener moves all the cars in the list and tells the
-     * view to update its images. Change this method to your needs.
-     **/
+    /**
+     * Singleton
+     */
+    private SimulationTimer(){}
+
+    public static SimulationTimer getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new SimulationTimer();
+        }
+        return INSTANCE;
+    }
+
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            modelUpdate();
+            update();
         }
     }
 
     public void startTimer(){
         timer.start();
     }
+
+    /**
+     * Observer
+     */
 
     public void addObserver(ModelObserver modelObserver) {
         this.modelObservers.add(modelObserver);
@@ -37,7 +51,7 @@ public class SimulationTimer {
         this.modelObservers.remove(modelObserver);
     }
 
-    public void modelUpdate() {
+    public void update() {
         for (ModelObserver modelObserver : this.modelObservers) {
             modelObserver.update();
         }
